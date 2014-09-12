@@ -113,7 +113,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
          * @type {Boolean}
          */
         flippable: true,
-        ready: function(){
+        domReady: function(){
           var self = this,
               
               rows = Math.ceil(self.items.length / self.itemsPerRow);
