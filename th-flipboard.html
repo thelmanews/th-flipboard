@@ -17,8 +17,8 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
       <core-style ref="theme"></core-style>
       <style>
         :host {
-          width: {{width + "px"}};
-          height: {{height + "px"}};
+          /*width: {{width + "px"}};*/
+          /*height: {{height + "px"}};*/
         }
 
         li, ul, menu, dir, li > p {
@@ -47,7 +47,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
       </style>
 
       <!-- Inline styles are for Safari and mobile support --> 
-        <div id="container" style="width: {{width}}px; height: {{height}}px;">
+        <div id="container" style="width: {{computedWidth}}px; height: {{computedHeight}}px;">
           <ul>
             <template repeat="{{item, itemIndex in items }}">
               <li style="max-height: {{itemHeight}};">
@@ -115,14 +115,16 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
         flippable: true,
         domReady: function(){
           var self = this,
-              
               rows = Math.ceil(self.items.length / self.itemsPerRow);
               self.margin = 2;
 
+          self.computedWidth = self.computeWidth(self.width);
+          self.computedHeight = self.computeHeight(self.height);
+          
           // Calculate height and with of items based on component size, itemsPerRow and margins
-          self.itemWidth = ((self.width - self.margin) / self.itemsPerRow) - 
+          self.itemWidth = ((self.computedWidth - self.margin) / self.itemsPerRow) - 
                             (self.margin/2 * (self.itemsPerRow-1) + self.margin); 
-          self.itemHeight =((self.height - self.margin) / rows) - 
+          self.itemHeight =((self.computedHeight - self.margin) / rows) - 
                             (self.margin/2 * (rows-1));
 
           // Get theme colors to set default colors for items
