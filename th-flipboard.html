@@ -46,7 +46,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
           <ul>
             <template repeat="{{item, itemIndex in items }}">
               <li style="max-height: {{itemHeight}};">
-                <th-flipbox width="{{itemWidth}}" height="{{itemHeight}}" animateAfter="{{(itemIndex + 1) * 200}}" flippable="{{flippable}}" style="overflow:hidden; max-height:{{itemHeight}}px;">
+                <th-flipbox width="{{itemWidth}}" height="{{itemHeight}}"  flippable="{{flippable}}" style="overflow:hidden; max-height:{{itemHeight}}px;">
                   
                   <!-- Front side -->
                   <div class="front" style="position: absolute; background: {{(item.backgroundFront || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: contain; top: 0; left: 0; ">
@@ -109,6 +109,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
          */
         flippable: true,
         domReady: function(){
+          
           var self = this,
               rows = Math.ceil(self.items.length / self.itemsPerRow);
               self.margin = 2;
@@ -127,7 +128,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
           while (self.items.length > self.colors.count){
             self.addMoreColors();
           }
-
+          this.animate();
         },
         /**
          * 'getColors' detects the theme selected in th-theme and collects the hex codes
@@ -195,6 +196,29 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
         },
         escapeHTML: function(value){
           return value ? value.replace("&#x27;","'").replace("&amp;","&") : "";
+        },
+        animate: function(){
+          var self = this,
+              boxes = self.shadowRoot.querySelectorAll('th-flipbox'),
+              length = boxes.length,
+              i=0;
+
+          var interval = setInterval(function(){
+            boxes[i].animate();
+            i++
+            if(i >= boxes.length){
+              clearInterval(interval);
+            } 
+          },(i+1)*200)
+        },
+        reset: function(){
+          var self = this,
+              boxes = self.shadowRoot.querySelectorAll('th-flipbox'),
+              length = boxes.length;
+              
+          for(i=0;i<length;i++){
+            boxes[i].reset();
+          }
         }
       });
 
