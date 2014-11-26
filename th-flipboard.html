@@ -11,11 +11,16 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
 @homepage http://github.com/thelmanews/thelma-text/blob/master/th-flipboard.html
 -->
 
-<polymer-element name="th-flipboard" extends="th-animated" attributes="width height itemsPerRow items flippable">
+<polymer-element name="th-flipboard" extends="th-animated" attributes="itemsPerRow items flippable">
 
   <template>
       <core-style ref="theme"></core-style>
       <style>
+        :host {
+          width: 200px;
+          height: 200px;
+        }
+
         li, ul, menu, dir, li > p {
           margin: 0;
           -webkit-margin-before: 0; /* required override browser default */
@@ -46,7 +51,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
           <ul>
             <template repeat="{{item, itemIndex in items }}">
               <li style="max-height: {{itemHeight}};">
-                <th-flipbox width="{{itemWidth}}" height="{{itemHeight}}"  flippable="{{flippable}}" style="overflow:hidden; max-height:{{itemHeight}}px;">
+                <th-flipbox flippable="{{flippable}}" style="overflow:hidden; max-height:{{itemHeight}}px; width: {{itemWidth}}px; height:{{itemHeight}}px;">
                   
                   <!-- Front side -->
                   <div class="front" style="position: absolute; background: {{(item.backgroundFront || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: contain; top: 0; left: 0; ">
@@ -114,8 +119,8 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
               rows = Math.ceil(self.items.length / self.itemsPerRow);
               self.margin = 2;
 
-          self.computedWidth = self.computeWidth(self.width);
-          self.computedHeight = self.computeHeight(self.height);
+          self.computedWidth = self.computeWidth();
+          self.computedHeight = self.computeHeight();
           
           // Calculate height and with of items based on component size, itemsPerRow and margins
           self.itemWidth = ((self.computedWidth - self.margin) / self.itemsPerRow) - 
