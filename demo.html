@@ -20,7 +20,17 @@
 
   <p>An example of using <code>&lt;th-flipboard></code>:</p>
 
-  <th-flipboard width="300" height="300" animateOnInit="true"></th-flipboard>
+  <th-flipboard style="width: 200px; height: 300px; " animateOnInit="true"></th-flipboard>
 
 </body>
+<script>
+    document.addEventListener('polymer-ready', function() {
+      setTimeout(function() {
+        var board =  document.querySelector('th-flipboard');
+        console.log(board.style);
+        board.style.width = '500px';
+
+      }, 2000);
+    });
+</script>
 </html>

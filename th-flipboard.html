@@ -128,6 +128,29 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
             self.addMoreColors();
           }
 
+          console.log(self.computedWidth);
+          console.log(self.computedHeight);
+
+          var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              console.log(mutation.type);
+              if(mutation.attributeName=='style') {
+
+                self.computedWidth = self.computeWidth(self.width);
+                self.computedHeight = self.computeHeight(self.height);
+                console.log(self.computedWidth);
+                console.log(self.computedHeight);
+
+              }
+            });    
+          });
+           
+          // configuration of the observer:
+          var config = { attributes: true, childList: true, characterData: true };
+           
+          // pass in the target node, as well as the observer options
+          observer.observe(this, config);
+
         },
         /**
          * 'getColors' detects the theme selected in th-theme and collects the hex codes
