@@ -11,7 +11,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
 @homepage http://github.com/thelmanews/thelma-text/blob/master/th-flipboard.html
 -->
 
-<polymer-element name="th-flipboard" extends="th-animated" attributes="itemsPerRow items flippable roundEdges">
+<polymer-element name="th-flipboard" extends="th-animated" attributes="itemsPerRow items flippable roundCorners">
 
   <template>
       <core-style ref="theme"></core-style>
@@ -35,12 +35,12 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
         <th-flipbox flippable="{{flippable}}" style="display: inline-block: float: left; overflow:hidden; max-height:{{itemHeight}}; width: {{itemWidth}}; height:{{itemHeight}}; margin: -2px;">
           
           <!-- Front side -->
-          <div class="front {{isRounded(roundEdges)}}" style="position: absolute; background: {{(item.backgroundFront || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover;">
+          <div class="front {{isRounded(roundCorners)}}" style="position: absolute; background: {{(item.backgroundFront || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover;">
             <p class="mainpoint" style="color: {{item.colorFront || colors.theme.foreground1}};"> {{item.textFront | escapeHTML}} </p>
           </div>
           
           <!-- Back side -->
-          <div class="back {{isRounded(roundEdges)}}" style="position: absolute;  background: {{(item.backgroundBack || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover; ">
+          <div class="back {{isRounded(roundCorners)}}" style="position: absolute;  background: {{(item.backgroundBack || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover; ">
             <p class="mainpoint" style="color: {{item.colorBack || colors.theme.foreground1}};"> {{item.textBack | escapeHTML}} </p>
           </div>
 
@@ -87,7 +87,11 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
          * @type {Boolean}
          */
         flippable: true,
-        roundEdges: false,
+        /**
+         * 'roundCorners' rounds the corners of each box in the flipboard
+         * @type {Boolean}
+         */
+        roundCorners: true,
         init: function(){
           
           var self = this,
