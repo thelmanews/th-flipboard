@@ -11,7 +11,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
 @homepage http://github.com/thelmanews/thelma-text/blob/master/th-flipboard.html
 -->
 
-<polymer-element name="th-flipboard" extends="th-animated" attributes="itemsPerRow items flippable">
+<polymer-element name="th-flipboard" extends="th-animated" attributes="itemsPerRow items flippable roundEdges">
 
   <template>
       <core-style ref="theme"></core-style>
@@ -19,6 +19,12 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
         :host {
           width: 200px;
           height: 200px;
+        }
+
+        .rounded {
+          border-radius: 3%;
+          -moz-border-radius: 3%;
+          -webkit-border-radius: 3%;
         }
 
       </style>
@@ -29,12 +35,12 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
         <th-flipbox flippable="{{flippable}}" style="display: inline-block: float: left; overflow:hidden; max-height:{{itemHeight}}; width: {{itemWidth}}; height:{{itemHeight}}; margin: -2px;">
           
           <!-- Front side -->
-          <div class="front" style="position: absolute; background: {{(item.backgroundFront || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover;">
+          <div class="front {{isRounded(roundEdges)}}" style="position: absolute; background: {{(item.backgroundFront || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover;">
             <p class="mainpoint" style="color: {{item.colorFront || colors.theme.foreground1}};"> {{item.textFront | escapeHTML}} </p>
           </div>
           
           <!-- Back side -->
-          <div class="back" style="position: absolute;  background: {{(item.backgroundBack || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover; ">
+          <div class="back {{isRounded(roundEdges)}}" style="position: absolute;  background: {{(item.backgroundBack || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover; ">
             <p class="mainpoint" style="color: {{item.colorBack || colors.theme.foreground1}};"> {{item.textBack | escapeHTML}} </p>
           </div>
 
@@ -63,10 +69,10 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
                   textBack: "back", backgroundBack: "", colorBack:""},
                   {textFront: "front", backgroundFront: "", colorFront:"", 
                   textBack: "back", backgroundBack: "", colorBack:""},
-                  {textFront: "front", backgroundFront: "", colorFront:"", 
-                  textBack: "back", backgroundBack: "", colorBack:""},
-                  {textFront: "front", backgroundFront: "", colorFront:"", 
-                  textBack: "back", backgroundBack: "", colorBack:""}
+                  {textFront: "", backgroundFront: "", colorFront:"", 
+                  textBack: "", backgroundBack: "", colorBack:""},
+                  {textFront: "", backgroundFront: "", colorFront:"", 
+                  textBack: "", backgroundBack: "", colorBack:""}
                 ],
         /**
          * 'itemsPerRow' determines the number of items shown in each row. Number
@@ -81,6 +87,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
          * @type {Boolean}
          */
         flippable: true,
+        roundEdges: true,
         init: function(){
           
           var self = this,
@@ -187,6 +194,9 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
           for(i=0;i<length;i++){
             boxes[i].reset();
           }
+        },
+        isRounded: function(value){
+          return value ? 'rounded' : '';
         }
       });
 
