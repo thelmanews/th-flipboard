@@ -12,7 +12,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
 @homepage http://github.com/thelmanews/thelma-text/blob/master/th-flipboard.html
 -->
 
-<polymer-element name="th-flipboard" extends="th-animated" attributes="itemsPerRow items flippable roundCorners">
+<polymer-element name="th-flipboard" extends="th-animated" attributes="itemsPerRow items flippable roundCorners textAlign">
 
   <template>
       <core-style ref="theme"></core-style>
@@ -37,12 +37,12 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
           
           <!-- Front side -->
           <div class="front {{isRounded(roundCorners)}}" style="position: absolute; background: {{(item.backgroundFront || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover;">
-            <th-text align="center" type="mainpoint" markdown="true" style="color: {{item.colorFront || colors.theme.foreground1}};">{{item.textFront | escapeHTML}}</th-text>
+            <th-text align="{{textAlign}}" type="mainpoint" markdown="true" style="color: {{item.colorFront || colors.theme.foreground1}};">{{item.textFront | escapeHTML}}</th-text>
           </div>
           
           <!-- Back side -->
           <div class="back {{isRounded(roundCorners)}}" style="position: absolute;  background: {{(item.backgroundBack || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover; ">
-            <th-text align="center" type="mainpoint" markdown="true" style="color: {{item.colorBack || colors.theme.foreground1}};">{{item.textBack | escapeHTML}}</th-text>
+            <th-text align="{{textAlign}}" type="mainpoint" markdown="true" style="color: {{item.colorBack || colors.theme.foreground1}};">{{item.textBack | escapeHTML}}</th-text>
           </div>
 
         </th-flipbox>
@@ -93,6 +93,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
          * @type {Boolean}
          */
         roundCorners: true,
+        textAlign: 'center',
         init: function(){
           
           var self = this,
