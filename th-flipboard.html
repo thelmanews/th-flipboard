@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../th-animated/th-animated.html">
 <link rel="import" href="../th-flipbox/th-flipbox.html">
+<link rel="import" href="../th-text/th-text.html">
 
 <!--
 Element providing a flexible layout grid of flippable boxes, dependent on th-flipbox.
@@ -11,7 +12,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
 @homepage http://github.com/thelmanews/thelma-text/blob/master/th-flipboard.html
 -->
 
-<polymer-element name="th-flipboard" extends="th-animated" attributes="itemsPerRow items flippable roundCorners">
+<polymer-element name="th-flipboard" extends="th-animated" attributes="itemsPerRow items flippable roundCorners textAlign">
 
   <template>
       <core-style ref="theme"></core-style>
@@ -36,12 +37,12 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
           
           <!-- Front side -->
           <div class="front {{isRounded(roundCorners)}}" style="position: absolute; background: {{(item.backgroundFront || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover;">
-            <p class="mainpoint" style="color: {{item.colorFront || colors.theme.foreground1}};"> {{item.textFront | escapeHTML}} </p>
+            <th-text align="{{textAlign}}" type="mainpoint" markdown="true" style="color: {{item.colorFront || colors.theme.foreground1}};">{{item.textFront | escapeHTML}}</th-text>
           </div>
           
           <!-- Back side -->
           <div class="back {{isRounded(roundCorners)}}" style="position: absolute;  background: {{(item.backgroundBack || colors.accents[itemIndex]) | formatImageUrl }}; background-repeat: no-repeat; background-size: cover; ">
-            <p class="mainpoint" style="color: {{item.colorBack || colors.theme.foreground1}};"> {{item.textBack | escapeHTML}} </p>
+            <th-text align="{{textAlign}}" type="mainpoint" markdown="true" style="color: {{item.colorBack || colors.theme.foreground1}};">{{item.textBack | escapeHTML}}</th-text>
           </div>
 
         </th-flipbox>
@@ -69,10 +70,10 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
                   textBack: "back", backgroundBack: "", colorBack:""},
                   {textFront: "front", backgroundFront: "", colorFront:"", 
                   textBack: "back", backgroundBack: "", colorBack:""},
-                  {textFront: "", backgroundFront: "", colorFront:"", 
-                  textBack: "", backgroundBack: "", colorBack:""},
-                  {textFront: "", backgroundFront: "", colorFront:"", 
-                  textBack: "", backgroundBack: "", colorBack:""}
+                  {textFront: "front", backgroundFront: "", colorFront:"", 
+                  textBack: "back", backgroundBack: "", colorBack:""},
+                  {textFront: "front", backgroundFront: "", colorFront:"", 
+                  textBack: "back", backgroundBack: "", colorBack:""}
                 ],
         /**
          * 'itemsPerRow' determines the number of items shown in each row. Number
@@ -92,6 +93,7 @@ Element providing a flexible layout grid of flippable boxes, dependent on th-fli
          * @type {Boolean}
          */
         roundCorners: true,
+        textAlign: 'center',
         init: function(){
           
           var self = this,

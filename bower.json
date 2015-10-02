@@ -5,6 +5,7 @@
   "main": "th-flipboard.html",
   "dependencies": {
     "polymer": "Polymer/polymer#~0.5.1",
+    "th-text": "https://github.com/thelmanews/th-text.git",
     "th-animated": "https://github.com/thelmanews/th-animated.git",
     "th-flipbox": "https://github.com/thelmanews/th-flipbox.git"
   }
